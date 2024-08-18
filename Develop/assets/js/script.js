@@ -44,6 +44,10 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
+const taskDelete = document.createElement("delete")
+taskDelete.innerText = "Delete"
+taskDelete.classList.add('btn', 'btn-danger','cardDeleteButton');
+taskDelete.addEventListener('click', () => handleDeleteTask(task.id));
 
 }
 
