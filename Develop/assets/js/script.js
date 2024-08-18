@@ -17,8 +17,18 @@ function generateTaskId() {
 
 }
 
-// Todo: create a function to create a task card
 function createTaskCard(task) {
+    const taskdiv = document.getElementById("TaskCard");
+
+    const taskCard = document.createElement('cards');
+    taskCard.id ='task' + task.id;
+    taskCard.classList.add('card','draggle', "mb-2");
+
+    taskCard.inerHtml = 
+    <div class = "card-body">
+        <h2 class="card-name">${task.taskname} </h2>
+        <p class ="card-body">${task.body} </p>
+    </div>;
 
 }
 
