@@ -1,4 +1,4 @@
-// Retrieve tasks and nextId from localStorage
+
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
@@ -32,7 +32,6 @@ function createTaskCard(task) {
 
 }
 
-// Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
 
     const taskcontainer = document.querySelectorAll('.task-lane');
@@ -61,6 +60,11 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
+    event.preventDefault(); 
+
+    const taskname = document.getElementById('taskname').valu;
+    const taskbody =document.getElementById('taskbody').value;
+    const taskdate = document.getElementById('taskdate').value;
 
 }
 
@@ -86,3 +90,7 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
 
 });
+
+
+const dayjs = require('dayjs')
+dayjs().format()
