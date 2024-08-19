@@ -35,6 +35,28 @@ function createTaskCard(task) {
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
 
+    const taskcontainer = document.querySelectorAll('.task-lane');
+    taskcontainer.forEach(container => container.innerHTML = '');
+
+    $(taskCard).draggable(
+        {
+            helper: 'clone',
+            revert: 'ivalid',
+            start: function(event, ui) {
+                $(this).addClass('dragging');
+            }
+        }
+    )
+    $(document).ready(()=> {
+        renderTaskList();
+
+        $('.task-lane').droppable({
+            accept:'draggable',
+            drop: handleDrop
+        }
+
+        )
+    })
 }
 
 // Todo: create a function to handle adding a new task
@@ -42,7 +64,6 @@ function handleAddTask(event){
 
 }
 
-// Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
 const taskDelete = document.createElement("delete")
 taskDelete.innerText = "Delete"
@@ -53,6 +74,11 @@ taskDelete.addEventListener('click', () => handleDeleteTask(task.id));
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    const taskCard = ui.helper[0];
+    const taskId = taskCard.id.replace('task-', '');
+    const newLane = event.target.id;
+    udateTaskStatus(taskId, newLane);
+    event.target.appendChild(taskCard);
 
 }
 
