@@ -14,71 +14,56 @@ function generateTaskId() {
 function createTaskCard(task) {
     const taskdiv = document.getElementById("TaskCard");
 
-    const taskCard = document.createElement('cards');
+    const taskCard = document.createElement('div');
     taskCard.id ='task' + task.id;
     taskCard.classList.add('card','draggle', "mb-2");
 
-    taskCard.inerHtml = 
+    taskCard.innerHtml = 
     <div class = "card-body">
-        <h2 class="card-name">${task.taskname} </h2>
+        <h5 class="card-name">${task.taskname} </h5>
         <p class ="card-body">${task.body} </p>
-    </div>;
-
+        <p class= "card-body"><small class = "body-muted">due: ${task.taskDate}</small></p>
+        <button class="btn btn-danger deletebutton" oneclick = "delete (${task.id})">Delete</button>
+    </div>
+    ;
+    return taskCard;
 }
 
 function renderTaskList() {
+    const lanes = {
+        'to-do': document.getElementById('to-do'),
+        'in-progress': document.getElementById('in-progress'),
+        'done': document.getElementById('done')
 
-    const taskcontainer = document.querySelectorAll('.task-lane');
-    taskcontainer.forEach(container => container.innerHTML = '');
+    };
 
-    $(taskCard).draggable(
-        {
-            helper: 'clone',
-            revert: 'ivalid',
-            start: function(event, ui) {
-                $(this).addClass('dragging');
-            }
-        }
-    )
-    $(document).ready(()=> {
-        renderTaskList();
+    Object.values(lanes).forEach(lane => lane.innerHTML = '' );
 
-        $('.task-lane').droppable({
-            accept:'draggable',
-            drop: handleDrop
+    taskList.forEach(task => {
+        helper: 'clone',
+        revert: 'invalid', 
+        start: function () {
+            $(this).addClass('dragging');
+        },
+        stop: function (){
+            $(this).removeClass('dragging');
         }
 
-        )
-    })
-}
+    }); 
+};
 
-// Todo: create a function to handle adding a new task
-function handleAddTask(event){
-    event.preventDefault(); 
 
-    const taskName = document.getElementById('taskname').valu;
-    const taskBody =document.getElementById('taskbody').value;
-    const taskDate = document.getElementById('taskdate').value;
+$('.lane .card-body').droppable({
+    accept: '.draggable',
+    drop: function (event, ui) {
+        const taskId = ui.helper[0].id.replace('task-','');
+        const newstatus = $(this).parent().attr('id');
+        udateTaskStatus (taskId, newstatus);
+        renndertasklist();
 
-}
+    }
+});
 
-function handleDeleteTask(event){
-const taskDelete = document.createElement("delete")
-taskDelete.innerText = "Delete"
-taskDelete.classList.add('btn', 'btn-danger','cardDeleteButton');
-taskDelete.addEventListener('click', () => handleDeleteTask(task.id));
-
-}
-
-// Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {
-    const taskCard = ui.helper[0];
-    const taskId = taskCard.id.replace('task-', '');
-    const newLane = event.target.id;
-    udateTaskStatus(taskId, newLane);
-    event.target.appendChild(taskCard);
-
-}
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
