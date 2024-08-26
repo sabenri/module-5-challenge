@@ -1,18 +1,12 @@
 
-let taskList = JSON.parse(localStorage.getItem("tasks"));
-let nextId = JSON.parse(localStorage.getItem("nextId"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
+let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 
 function generateTaskId() {
-    let currentId = parseInt(localStorage.getItem('nextId')) || 1;
-    currentId++
+    let currentId = nextId;
+    nextId ++;
 
-    if (currentId > 100) {
-        currentId =1;
-    }
-
-    localStorage.setItem('nextId', currentId);
-    console.log(currentId);
-
+    localStorage.setItem('nextId', nextId)
     return currentId;
 
 }
@@ -62,9 +56,9 @@ function renderTaskList() {
 function handleAddTask(event){
     event.preventDefault(); 
 
-    const taskname = document.getElementById('taskname').valu;
-    const taskbody =document.getElementById('taskbody').value;
-    const taskdate = document.getElementById('taskdate').value;
+    const taskName = document.getElementById('taskname').valu;
+    const taskBody =document.getElementById('taskbody').value;
+    const taskDate = document.getElementById('taskdate').value;
 
 }
 
