@@ -18,14 +18,14 @@ function createTaskCard(task) {
     taskCard.id ='task' + task.id;
     taskCard.classList.add('card','draggle', "mb-2");
 
-    taskCard.innerHtml =
-    <div class = "card-body">
-        <h5 class="card-name">${task.taskname} </h5>
-        <p class ="card-body">${task.body} </p>
-        <p class= "card-body"><small class = "body-muted">due: ${task.taskDate}</small></p>
-        <button class="btn btn-danger deletebutton" oneclick = "delete (${task.id})">Delete</button>
-    </div>
-    ;
+    taskCard.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-name">${task.taskname}</h5>
+            <p class="card-body">${task.body}</p>
+            <p class="card-body"><small class="body-muted">due: ${task.taskDate}</small></p>
+            <button class="btn btn-danger deletebutton" onclick="handleDeleteTask(${task.id})">Delete</button>
+        </div>
+    `;
     return taskCard;
 }
 
@@ -80,11 +80,9 @@ function deletetask(taskID) {
 }
 
 $(document).ready(function () {
-    renderTaskList ();
-    $('#addtaskform').on('submit',handleaddtaak);
-    $('#taskdate').datepicker({
-        dateFromat:'mm-dd-yy'
-    });
+    document.addEventListener('DOMContentLoaded',(event) =>{
+        const today =dayjs().format('MM-DD-YY');
+    })
 
 });
 
