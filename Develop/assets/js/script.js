@@ -88,7 +88,25 @@ $(document).ready(function () {
 
 });
 
+function handleaddtask(event) {
+    event.preventDefault();
+    const taskname = $('#taskname').val();
+    const taskbody = $('#taskbody').val();
+    const taskdate = $('#taskdate').val();
 
+    const newtask = {
+        id : generateTaskId(),
+        taskname : taskname,
+        body: taskbody,
+        taskdate: taskdate,
+        status: 'to-do'
+    };
+    taskList.push(newtask);
+    localStorage.setItem('tasks', JSON,stringify(taskList));
+    renderTaskList();
+
+    $('#addtaskform')[0].reset();
+}
 
 
 const dayjs = require('dayjs')
