@@ -64,12 +64,31 @@ function renderTaskList() {
         }
     });
 }
+function updateTaskStatus(taskId, newStatus) {
+    taskList = taskList.map( task => {
+        if (task.id == taskID){
+            task.status = newStatus;
+        }
+        return task;
+    });
+    localStorage.setItem('task',Json.stringify(taskList));
+}
+function deletetask(taskID) {
+    taskList = taskList.fillter(task => task.id != taskID);
+    localStorage.setItem('tasks',JSON.stringify(taskList));
+    renderTaskList();
+}
 
-
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+    renderTaskList ();
+    $('#addtaskform').on('submit',handleaddtaak);
+    $('#taskdate').datepicker({
+        dateFromat:'mm-dd-yy'
+    });
 
 });
+
+
 
 
 const dayjs = require('dayjs')
