@@ -34,35 +34,36 @@ function renderTaskList() {
         'to-do': document.getElementById('to-do'),
         'in-progress': document.getElementById('in-progress'),
         'done': document.getElementById('done')
-
     };
 
-    Object.values(lanes).forEach(lane => lane.innerHTML = '' );
+    Object.values(lanes).forEach(lane => lane.innerHTML = '');
 
     taskList.forEach(task => {
-        helper: 'clone',
-        revert: 'invalid', 
-        start: function () {
-            $(this).addClass('dragging');
-        },
-        stop: function (){
-            $(this).removeClass('dragging');
+        const taskCard = createTaskCard(task);
+        lanes[task.status].appendChild(taskCard);
+
+        $(taskCard).draggable({
+            helper: 'clone',
+            revert: 'invalid',
+            start: function () {
+                $(this).addClass('dragging');
+            },
+            stop: function () {
+                $(this).removeClass('dragging');
+            }
+        });
+    });
+
+    $('.lane').droppable({
+        accept: '.draggable',
+        drop: function (event, ui) {
+            const taskId = ui.helper[0].id.replace('task-', '');
+            const newStatus = $(this).attr('id');
+            updateTaskStatus(taskId, newStatus);
+            renderTaskList();
         }
-
-    }); 
-};
-
-
-$('.lane .card-body').droppable({
-    accept: '.draggable',
-    drop: function (event, ui) {
-        const taskId = ui.helper[0].id.replace('task-','');
-        const newstatus = $(this).parent().attr('id');
-        udateTaskStatus (taskId, newstatus);
-        renndertasklist();
-
-    }
-});
+    });
+}
 
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
