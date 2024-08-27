@@ -18,7 +18,7 @@ function createTaskCard(task) {
     taskCard.id ='task' + task.id;
     taskCard.classList.add('card','draggle', "mb-2");
 
-    taskCard.innerHtml = 
+    taskCard.innerHtml =
     <div class = "card-body">
         <h5 class="card-name">${task.taskname} </h5>
         <p class ="card-body">${task.body} </p>
